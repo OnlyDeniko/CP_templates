@@ -1,5 +1,6 @@
 #include<bits/stdc++.h>
 #include<ext/pb_ds/assoc_container.hpp>
+#pragma optimize("jillzay, jillzay, paci, paci, gilzi, gilzi")
 //#pragma comment(linker, "/STACK:5000000000")
 //#pragma GCC optimize "-O3"
 //#pragma GCC optimize("Ofast,no-stack-protector")
@@ -17,7 +18,7 @@ istream& operator >> (istream& in, vector<pair<T, T> >& v){ for(auto& e : v){ in
 #define int long long
 //#define int short int
 #define pb push_back
-#define mk make_pair
+#define mkp make_pair
 #define X first
 #define Y second
 #define cont continue
@@ -51,6 +52,7 @@ istream& operator >> (istream& in, vector<pair<T, T> >& v){ for(auto& e : v){ in
     ostream& operator << (ostream& out, const set<T>& v){ for(auto& e : v){ out << e << d;} return out;}
 #endif
 typedef long long ll;
+typedef unsigned long long ull;
 typedef long double ldd;
 typedef pair<int, int> pii;
 typedef vector<int> vi;
@@ -58,10 +60,10 @@ typedef vector<string> vs;
 typedef vector<pii> vpi;
 typedef vector<vi> vvi;
 typedef map<int, int> mii;
-typedef unordered_map<string, int> msi;
+typedef map<string, int> msi;
 typedef set<int> si;
 typedef set<pii> spii;
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> indexed_set;
+typedef tree<int,null_type,less_equal<int>,rb_tree_tag,tree_order_statistics_node_update> indexed_set;
 template<class T> bool uin(T &a, T b) { return a > b ? (a = b, true) : false; }
 template<class T> bool uax(T &a, T b) { return a < b ? (a = b, true) : false; }
 template <typename T> string toString(T val){ostringstream oss; oss << val; return oss.str();}
@@ -71,10 +73,11 @@ mt19937 gen(chrono::high_resolution_clock::now().time_since_epoch().count());
 //const int dy[4] = {1, 0, -1, 0};
 //const int dx[8] = {0, 0, 1, 1, 1, -1, -1, -1};
 //const int dy[8] = {1, -1, 1, 0, -1, 1, 0, -1};
-const int dx2[8] = {-2, -2, 1, 1, -1, -1, 2, 2};
-const int dy2[8] = {-1, 1, -2, 2, -2, 2, -1, 1};
-const ldd eps = 1e-7;
-const int mod = (int)1e9 + 7;
+//const int dx[8] = {-2, -2, 1, 1, -1, -1, 2, 2};
+//const int dy[8] = {-1, 1, -2, 2, -2, 2, -1, 1};
+const ldd eps = 1e-13;
+const int mod = 1e9 + 7;;
+const ldd pi = acos(-1.);
 //const int MAX_MEM = 1e8;
 //int mpos = 0;
 //char mem[MAX_MEM];
@@ -83,25 +86,39 @@ const int mod = (int)1e9 + 7;
 //    return (void *)(mem + mpos - n);
 //}
 //inline void operator delete ( void * ) noexcept { }
+//void add(int &x, int y, int mod){
+//    x %= mod;
+//    y %= mod;
+//    x = (x + y) % mod;
+//    if (x < 0) x += mod;
+//}
+//
+//void sub(int &x, int y, int mod){
+//    x = (x - y) % mod;
+//    if (x < 0) x += mod;
+//}
+//
 //int mulq(int a, int b, int mod){
 //    int res = 0;
+//    a %= mod;
 //    while(b){
 //        if (b & 1){
-//            (res += a) %= mod;
+//            add(res, a, mod);
 //        }
 //        b >>= 1;
-//        (a += a) %= mod;
+//        add(a, a, mod);
 //    }
 //    return res;
 //}
 //
 //int powq(int a, int b, int mod) {
 //    int res = 1;
+//    a %= mod;
 //    while(b){
 //        if (b & 1){
 //            res = mulq(res, a, mod);
 //        }
-//        b >>= 1ll;
+//        b >>= 1;
 //        a = mulq(a, a, mod);
 //    }
 //    return res;
