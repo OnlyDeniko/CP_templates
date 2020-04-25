@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 #include<ext/pb_ds/assoc_container.hpp>
 #pragma optimize("jillzay, jillzay, paci, paci, gilzi, gilzi")
+#pragma optimize("JARU SOSISONI")
 //#pragma comment(linker, "/STACK:5000000000")
 //#pragma GCC optimize "-O3"
 //#pragma GCC optimize("Ofast,no-stack-protector")
@@ -52,7 +53,6 @@ istream& operator >> (istream& in, vector<pair<T, T> >& v){ for(auto& e : v){ in
     ostream& operator << (ostream& out, const set<T>& v){ for(auto& e : v){ out << e << d;} return out;}
 #endif
 typedef long long ll;
-typedef unsigned long long ull;
 typedef long double ldd;
 typedef pair<int, int> pii;
 typedef vector<int> vi;
@@ -69,14 +69,14 @@ template<class T> bool uax(T &a, T b) { return a < b ? (a = b, true) : false; }
 template <typename T> string toString(T val){ostringstream oss; oss << val; return oss.str();}
 template<typename T> T sqr(T a) {return a * a;}
 mt19937 gen(chrono::high_resolution_clock::now().time_since_epoch().count());
-//const int dx[4] = {0, 1, 0, -1};
-//const int dy[4] = {1, 0, -1, 0};
+const int dx[4] = {0, 1, 0, -1};
+const int dy[4] = {1, 0, -1, 0};
 //const int dx[8] = {0, 0, 1, 1, 1, -1, -1, -1};
 //const int dy[8] = {1, -1, 1, 0, -1, 1, 0, -1};
 //const int dx[8] = {-2, -2, 1, 1, -1, -1, 2, 2};
 //const int dy[8] = {-1, 1, -2, 2, -2, 2, -1, 1};
-const ldd eps = 1e-13;
-const int mod = 1e9 + 7;;
+const ldd eps = 1e-12;
+const int mod = 1e9 + 7;
 const ldd pi = acos(-1.);
 //const int MAX_MEM = 1e8;
 //int mpos = 0;
@@ -124,10 +124,6 @@ const ldd pi = acos(-1.);
 //    return res;
 //}
 
-struct pos{
-    int x, y, ind;
-};
-
 void solve(){
 
 }
@@ -138,14 +134,11 @@ signed main() {
             freopen("input.txt", "r", stdin);
 //            freopen("output.txt", "w", stdout);
     #else
-//            freopen("king2.in", "r", stdin);
-//            freopen("king2.out", "w", stdout);
+//            freopen("input.txt", "r", stdin);
+//            freopen("output.txt", "w", stdout);
     #endif
-    int t;
-    t = 1;
+    int t = 1;
 //    cin >> t;
-    while(t--){
-        solve();
-    }
+    forn(i, t) solve();
     return 0;
 }
