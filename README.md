@@ -1,1 +1,2 @@
-# CP_templates
+CP_templates
+------------
