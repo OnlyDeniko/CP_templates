@@ -1,12 +1,15 @@
+#!/bin/sh
 
-for i in A B C D /*названия папок*/
+echo 'Enter name of contest: '
+read  name
+mkdir $name
+cd $name
+
+for var
 do
-	mkdir $i
-	echo 'Created' $i
-	cd $i
-	cp "../main.cpp" main.cpp
-	cp "../input.txt" input.txt
-	cd main.cpp
+	mkdir $var
+	cd $var
+	cp "../../main.cpp" main$var.cpp
+	cp "../../input.txt" $var.txt
 	cd ..
-	
 done
