@@ -160,8 +160,8 @@ signed main() {
 //            freopen("input.txt", "r", stdin);
 //            freopen("output.txt", "w", stdout);
   #else
-            freopen("flow.in", "r", stdin);
-            freopen("flow.out", "w", stdout);
+//            freopen("flow.in", "r", stdin);
+//            freopen("flow.out", "w", stdout);
   #endif
   int t = 1;
 //  cin >> t;
