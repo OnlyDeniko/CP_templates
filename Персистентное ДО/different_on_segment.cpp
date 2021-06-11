@@ -121,7 +121,7 @@ struct node{
     }
 };
 typedef node* tree;
-vector<node *> versions;
+vector<tree> versions;
 vi a;
 
 tree update(const tree &t, int l, int r, int pos, int val){

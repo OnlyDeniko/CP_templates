@@ -85,7 +85,56 @@ inline void * operator new ( size_t n ) {
 inline void operator delete ( void * ) noexcept { }*/
 
 void solve(){
-  
+	int n;
+	cin >> n;
+	vi p, md(n + 1);
+	iota(all(md), 0);
+	
+	For(i, 2, n + 1){
+		if (md[i] == i) p.pb(i);
+		for(int j = 0;j < p.size() && p[j] <= md[i] && 1ll * i * p[j] <= n;j++) md[i * p[j]] = p[j];
+	}					
+	vector<char> mu(n + 1 );
+	mu[1] = 1;
+	vi phi(n + 1);
+	phi[1] = 1;
+	vector<int32_t> a1(n + 1);
+	a1[1] = 1;
+	vi p1a1(n + 1);
+	p1a1[1] = 1;
+	vi si0(n + 1);
+	si0[1] = 1;
+	vi si1(n + 1);
+	si1[1] = 1;
+	For(i, 2, n + 1){
+		int j = i / md[i];
+		
+		if (md[i] == md[j]) {
+			mu[i] = 0;
+			phi[i] = md[i] * phi[j];
+			a1[i] = a1[j] + 1;
+			p1a1[i] = md[i] * p1a1[j];
+			si0[i] = si0[j] / (a1[j] + 1)  * (a1[i] + 1);			
+			int was = (p1a1[j] * md[j] - 1) / (md[j] - 1);
+			int now = (p1a1[i] * md[i] - 1) / (md[i] - 1);
+			si1[i] = si1[j] / was * now;
+		}	else {
+			mu[i] = -mu[j];
+			phi[i] = (md[i] - 1) * phi[j];
+			a1[i] = 1;
+			p1a1[i] = md[i];
+			si0[i] = si0[j] * 2;
+			si1[i] = si1[j] * (p1a1[i] * md[i] - 1) / (md[i] - 1);
+		}
+	}
+		
+	md[1] = 0;
+
+	cout << (long long)accumulate(md.begin() + 1, md.end(), 0ll) << ' ';
+	cout << (long long)accumulate(si0.begin() + 1, si0.end(), 0ll) << ' ';
+	cout << (long long)accumulate(si1.begin() + 1, si1.end(), 0ll) << ' ';
+	cout << (long long)accumulate(phi.begin() + 1, phi.end(), 0ll) << ' ';
+	cout << (long long)accumulate(mu.begin() + 1, mu.end(), 0ll) << ' ';
 }
 
 signed main() {
@@ -98,7 +147,7 @@ signed main() {
 //            freopen("output.txt", "w", stdout);
   #endif
   int t = 1;
-  // cin >> t;
+//  cin >> t;
   forn(i, t) solve();
   return 0;
 }
