@@ -1,6 +1,12 @@
+using ldd = long double;
+const ldd EPS = 1e-9;
 struct vec{
     ldd x, y;
 
+    vec(ldd xx = 0, ldd yy = 0){
+        x = xx;
+        y = yy;
+    }
     ldd len2() const{
         return x * x + y * y;
     }
@@ -8,7 +14,21 @@ struct vec{
         return hypotl(x, y);
     }
     bool operator == (const vec & a){
-        return fabs(x - a.x) < eps && fabs(y - a.y) < eps;
+        return abs(x - a.x) < EPS && abs(y - a.y) < EPS;
+    }
+
+    bool operator < (const vec & a){
+        if (abs(x - a.x) < EPS){
+            return y < a.y;
+        }
+        return x < a.x;
+    }
+
+    void read(){
+        cin >> x >> y;
+    }
+    void write(){
+        cout << x << ' ' << y << '\n';
     }
 };
 
@@ -41,24 +61,30 @@ ldd dist(vec v1, vec v2){
 }
 
 vec norm(vec v){
+    if (v.len() == 0) return v;
     return v / v.len();
 }
 
 bool Parallel(vec v1, vec v2){
-    return fabs(vectmul(v1, v2)) < eps;
+    return abs(vectmul(v1, v2)) < EPS;
 }
 
 int sign(ldd x){
-    if (fabs(x) < eps) return 0;
+    if (abs(x) < EPS) return 0;
     if (x > 0) return 1;
     return -1;
+}
+
+ldd AngleBetweenVec(vec p1, vec p2){
+    ldd cosa = scalmul(p1, p2) / p1.len() / p2.len();
+    return acosl(cosa);
 }
 
 bool OnSegment(vec p, vec p1, vec p2){
     return vectmul(p - p1, p2 - p1) == 0 && scalmul(p1 - p, p2 - p) <= 0;
 }
 
-bool SegmentIntersect(vec p1, vec p2, vec p3, vec p4){
+bool SegmentsIntersect(vec p1, vec p2, vec p3, vec p4){
     if (Parallel(p2 - p1, p4 - p3)){
         return OnSegment(p1, p3, p4) || OnSegment(p2, p3, p4) ||
             OnSegment(p3, p1, p2) || OnSegment(p4, p1, p2);
@@ -68,7 +94,7 @@ bool SegmentIntersect(vec p1, vec p2, vec p3, vec p4){
     }
 }
 
-vec findLinesIntersection(vec p1, vec p2, vec p3, vec p4){ // guaranteed lines not parallel
+vec findSegmentsIntersection(vec p1, vec p2, vec p3, vec p4){ // guaranteed lines not parallel
     //p1 + t * (p2 - p1)
     //[p - p3, p4 - p3] = 0 <- system
     //[p1 + t *(p2 - p1) - p3, p4 - p3] = 0
@@ -78,16 +104,45 @@ vec findLinesIntersection(vec p1, vec p2, vec p3, vec p4){ // guaranteed lines n
     return p1 + (p2 - p1) * t;
 }
 
-vector<vec> findLineAndCircleIntersection(vec p1, vec p2, vec c, ldd r){
-    // circle - {p | (p - c, p - c} = r * r}
-    //{p1 + (p2 - p1) * t - c, p1 + (p2 - p1) * t - c) = r*r
-    //A * t * t + B * t + C = 0, A = (p2 - p1) * (p2 - p1), B = 2 * (p1 - c, p2 - p1)
-    //should be written
+bool LinesIntersect(vec p1, vec p2, vec p3, vec p4){
+    vec napr1 = p2 - p1;
+    vec napr2 = p4 - p3;
+    ldd a1 = napr1.y;
+    ldd b1 = -napr1.x;
+    ldd c1 = vectmul(napr1, p1);
+    ldd a2 = napr2.y;
+    ldd b2 = -napr2.x;
+    ldd c2 = vectmul(napr2, p3);
+    return !(abs(vectmul(vec(a1, a2), vec(b1, b2))) < EPS);
 }
 
-ldd AngleBetweenVec(vec p1, vec p2){
-    ldd cosa = scalmul(p1, p2) / p1.len() / p2.len();
-    return acosl(cosa);
+bool EqualLines(vec p1, vec p2, vec p3, vec p4){
+    vec napr1 = p2 - p1;
+    vec napr2 = p4 - p3;
+    ldd a1 = napr1.y;
+    ldd b1 = -napr1.x;
+    ldd c1 = vectmul(napr1, p1);
+    ldd a2 = napr2.y;
+    ldd b2 = -napr2.x;
+    ldd c2 = vectmul(napr2, p3);
+    return abs(vectmul(vec(a1, a2), vec(b1, b2))) < EPS &&
+           abs(vectmul(vec(a1, a2), vec(c1, c2))) < EPS &&
+           abs(vectmul(vec(b1, b2), vec(c1, c2))) < EPS;
+}
+
+vec findLinesIntersection(vec p1, vec p2, vec p3, vec p4){
+    vec napr1 = p2 - p1;
+    vec napr2 = p4 - p3;
+    napr1 = norm(napr1);
+    napr2 = norm(napr2);
+    ldd a1 = napr1.y;
+    ldd b1 = -napr1.x;
+    ldd c1 = vectmul(napr1, p1);
+    ldd a2 = napr2.y;
+    ldd b2 = -napr2.x;
+    ldd c2 = vectmul(napr2, p3);
+    return {vectmul(vec(b1, b2), vec(c1, c2)) / vectmul(vec(a1, a2), vec(b1, b2)),
+            vectmul(vec(c1, c2), vec(a1, a2)) / vectmul(vec(a1, a2), vec(b1, b2))};
 }
 
 ldd calc(vec p1, vec p2, vec p3){
