@@ -7,7 +7,7 @@ struct Node {
 		if (lo + 1 < hi) {
 			int mid = lo + (hi - lo) / 2;
 			l = new Node(v, lo, mid);
-      r = new Node(v, mid, hi);
+			r = new Node(v, mid, hi);
 			val = min(l->val, r->val);
 		}
 		else val = v[lo];
@@ -23,8 +23,8 @@ struct Node {
 		if (L <= lo && hi <= R) mset = val = x, madd = 0;
 		else {
 			push();
-      l->set(L, R, x);
-      r->set(L, R, x);
+			l->set(L, R, x);
+			r->set(L, R, x);
 			val = min(l->val, r->val);
 		}
 	}
@@ -37,8 +37,8 @@ struct Node {
 		}
 		else {
 			push();
-      l->add(L, R, x);
-      r->add(L, R, x);
+			l->add(L, R, x);
+			r->add(L, R, x);
 			val = min(l->val, r->val);
 		}
 	}
@@ -46,18 +46,18 @@ struct Node {
 		if (!l) {
 			int mid = lo + (hi - lo)/2;
 			l = new Node(lo, mid);
-      r = new Node(mid, hi);
+			r = new Node(mid, hi);
 		}
 		if (mset != inf){
 			l->set(lo,hi,mset);
-      r->set(lo,hi,mset);
-      mset = inf;
-    }
+			r->set(lo,hi,mset);
+			mset = inf;
+		}
 		else if (madd){
 			l->add(lo,hi,madd);
-      r->add(lo,hi,madd);
-      madd = 0;
-    }
+			r->add(lo,hi,madd);
+			madd = 0;
+		}
 	}
 };
 
@@ -83,7 +83,7 @@ struct HLD {
 	}
 
 	void dfsHld(int v) {
-    pos[v] = tim++;
+		pos[v] = tim++;
 		for (int u : adj[v]) {
 			rt[u] = (u == adj[v][0] ? rt[v] : u);
 			dfsHld(u);
@@ -108,7 +108,7 @@ struct HLD {
 		process(u, v, [&](int l, int r) {
 				res = min(res, tree->query(l, r));
 		});
-    return res;
+		return res;
 	}
 
 	int querySubtree(int v) { // modifySubtree is similar
