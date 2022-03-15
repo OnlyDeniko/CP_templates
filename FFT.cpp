@@ -1,33 +1,56 @@
-#include<bits/stdc++.h>
+struct Complex {
+	long double x, y;
 
-using namespace std;
+	Complex() : x(), y() {}
 
-#define all(x) (x).begin(),(x).end()
+	Complex(long double x, long double y) : x(x), y(y) {}
 
-
-const long double pi = acosl(-1.);
-const int base = 10;
-
-void fft(vector<complex<double> > &a, bool invert) {
-	int n = (int)a.size();
-	if (n == 1)  return;
-	vector<complex<double> > a0, a1;
-	for (int i = 0; i < n; i += 2) {
-		a0.push_back(a[i]);
-		a1.push_back(a[i + 1]);
+	Complex operator+(const Complex& o) const {
+		return {x + o.x, y + o.y};
 	}
-	fft(a0, invert);
-	fft(a1, invert);
-	double alp = 2 * pi / n * (invert ? -1 : 1);
-	complex<double> w(1), mult(cosl(alp), sinl(alp));
-	for (int i = 0; i < n / 2; i++) {
-		a[i] = a0[i] + w * a1[i];
-		a[i + n / 2] = a0[i] - w * a1[i];
-		if (invert) {
-			a[i] /= 2;
-			a[i + n / 2] /= 2;
+
+	Complex operator-(const Complex& o) const {
+		return {x - o.x, y - o.y};
+	}
+
+	Complex operator*(const Complex& o) const {
+		return {x * o.x - y * o.y, x * o.y + y * o.x};
+	}
+};
+
+const long double PI = acosl(-1);
+
+// a should be of size 2^k
+void fft(vector<Complex>& a, bool inv = false) {
+	for (int i = 1, j = 0; i < a.size(); i++) {
+		int bit = a.size() / 2;
+		for (; j >= bit; bit /= 2) {
+			j -= bit;
 		}
-		w *= mult;
+		j += bit;
+		if (i < j) {
+			swap(a[i], a[j]);
+		}
+	}
+	int n = a.size();
+	for (int k = 1; k < n; k *= 2) {
+		long double ang = PI / (inv ? -k : k);
+		Complex e(cosl(ang), sinl(ang));
+		for (int i = 0; i < n; i += 2 * k) {
+			Complex w(1, 0);
+			for (int j = 0; j < k; ++j) {
+				Complex v = a[i + j + k] * w;
+				a[i + j + k] = a[i + j] - v;
+				a[i + j] = a[i + j] + v;
+				w = w * e;
+			}
+		}
+	}
+	if (inv) {
+		for (int i = 0; i < n; i++) {
+			a[i].x /= n;
+			a[i].y /= n;
+		}
 	}
 }
 
@@ -62,30 +85,3 @@ void multiply(const vector<int> &a, const vector<int> &b, vector<int> &res) {
     }
 	while (res.size() && res.back() == 0) res.pop_back();
 }
-
-void convert(string s, string t, vector<int> &a, vector<int> & b){
-    for(auto x : s){
-        a.push_back(x - '0');
-    }
-    for(auto x : t){
-        b.push_back(x - '0');
-    }
-}
-
-signed main() {
-    //на вход два длинных числа, на выходее результат умножения
-    string  s, t;
-    cin >> s >> t;
-    vector<int> a, b;
-    convert(s, t, a, b);
-	vector<int> res;
-	multiply(a, b, res);
-    reverse(all(res));
-	reverse(all(a));
-	reverse(all(b));
-	for(auto x : res)
-        cout << x;
-	return 0;
-}
-//17x^4 - 6x^3 - x^2 + 23x - 17
-//42x^5 - 20x^4 - 19x^3 + 3x^2 + 11x - 243
