@@ -21,9 +21,14 @@ void debug_out(head H, tail... T){ cout << " " << H; debug_out(T...);}
 
 #ifdef HOME
     #define deb(...) cout << "[" << #__VA_ARGS__ << "] :", debug_out(__VA_ARGS__)
+    template <class T>
+    ostream& operator << (ostream& out, const vector<T>& v){ out << "[";for(int i = 0;i < (int)v.size();i++){out << v[i];if (i != (int)v.size() - 1) out << " ";} out << "]"; return out; }
+    template <class T>
+    ostream& operator << (ostream& out, const pair<T, T>& v){ out << "[";out << v.first << ", " << v.second;out << "]"; return out;}
 #else
     #define deb(...)
 #endif
+
 typedef long long ll;
 typedef long double ldd;
 typedef pair<int, int> pii;
@@ -39,7 +44,7 @@ const int MOD = 1e9 + 7;
 const ldd PI = acos(-1.);
 
 void solve(){
-  
+
 }
 
 signed main() {
@@ -49,3 +54,4 @@ signed main() {
   forn(i, t) solve();
   return 0;
 }
+//g++ -Wall -Wextra -Weffc++ -O3 -DHOME=1 -o a main.cpp
