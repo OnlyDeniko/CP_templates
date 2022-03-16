@@ -7,9 +7,11 @@
 \usepackage[T2A]{fontenc}
 \usepackage{fancybox,fancyhdr}
 \usepackage{LastPage}
-
+\usepackage{amsmath}
+\usepackage[warn]{mathtext}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{longtable}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -18,7 +20,7 @@
 \lstset{
   language=C++,
 	numbers=none,
-	basicstyle=\ttfamily\footnotesize,
+	basicstyle=\ttfamily\small,
 	keywordstyle=\color{blue}\ttfamily,
 	stringstyle=\color{blue}\ttfamily,
 	commentstyle=\color{red}\ttfamily,
@@ -31,7 +33,7 @@
   breaklines=true,
   language=C++,
   showstringspaces=false,
-  basicstyle=\footnotesize\ttfamily,
+  basicstyle=\small\ttfamily,
   keywordstyle=\bfseries\color{dkgreen},
   commentstyle=\color{red},
   identifierstyle=\color{blue},
@@ -60,15 +62,19 @@
 
 \section{Setup}
 \subsection{Instructions}
-Нужно выбрать среду разработки.
+Выбрали CLion. Нужен гайд по установке окружения.
 \\ g++ -Wall -Wextra -Weffc++ -O3 -DHOME=1 -o a main.cpp
 \subsection{Template}
 \lstinputlisting[style=customc]{template.cpp}
 \subsection{Make folders}
 \lstinputlisting[language=bash]{run.sh}
+\subsection{Фишечки}
+\lstinputlisting[language=bash]{Algorithms/fishki.cpp}
 \section{Algorithms}
 \subsection{Pragmas}
 \lstinputlisting[style=customc]{Algorithms/pragmas.cpp}
+\subsection{PBDS}
+\lstinputlisting[style=customc]{Algorithms/PBDS.cpp}
 \subsection{Sieve}
 \lstinputlisting[style=customc]{Algorithms/strong_sieve.cpp}
 \subsection{2D geometry + Сonvex hull}
@@ -112,5 +118,126 @@
 \end{multicols}
 \newpage
 \section{Формулы}
+\begin{itemize}
+\item Всего генераторов (пораждающих элементов) в группе по модулю N -- $\varphi(\varphi(N))$
+\item Генератор существует только у чисел $2, 4, p^a, p^{2a}$
+\item Длина группы генератора -- $\varphi(N)$
+\item Теорема Эйлера: $a^{\varphi(N)} \equiv 1 \pmod{N}$, где gcd$(a, b) = 1$
+\item Малая теорема Ферма: $a^{p-1} \equiv 1 \pmod{p}$, где gcd$(a, p) = 1$ и p - простое
+\item Порядком r называется наименьшее положительное такое, что $x^r \equiv 1 \pmod{N}$.
+По теореме Лагранжа r будет делителем $\varphi(N)$. Поэтому, чтобы найти порядок нужно перебрать все делители $\varphi(N)$
+\item Число цифр в периоде дроби $\frac{a}{b}$ равно m : $(10^{m}*a - a) \mod{b} = 0$. $b = 2^x*5^y*B$ -- длина предпериода равна $max(x, y)$
+\item Китайская теорема об остатках
+\\ Дано: 
+\begin{equation*}
+  \begin{split}
+    &c\mod a = a_1 \\
+    &c\mod b = b_1 \\
+    &c\mod (a * b) = ?
+  \end{split}
+  \end{equation*}
+\\ Решение:
+\begin{equation*}
+  \begin{split}
+    &a*x + b*y = 1 (gcdex)\\
+    &c = (a_1 + a * x * (b_1 - a_1)) \mod (a * b)
+  \end{split}
+  \end{equation*}
+\item Числа стирлинга 2-го рода
+\begin{equation}
+  \begin{split}
+    &S_2(n, k) = 
+    \left\{
+    \begin{array}{cc}
+    S_2(n-1, k-1) + k \cdot S_2(n-1, k), & 0 < k \le n\\
+    0, & n = 0\\
+    1, & k = n
+    \end{array}
+    \right.\\
+    &S_2(n, k) = \frac{1}{k!}\sum\limits_{i=0}^k(-1)^{i}\binom{k}{i}(k - i)^n\\
+    &S_2(n + 1, m + 1) = \sum\limits_{k=0}^n\binom{n}{m} \cdot S_2(k, m)\\
+    &\sum\limits_{k=0}^nS_2(n, k) = B_n \text{ -- число Белла}
+  \end{split}
+\end{equation}
+\begin{longtable}[c]{lllllllllll}
 
+n\textbackslash{}k & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9
+\\
+0 & 1 & & & & & & & & &
+\\
+1 & 0 & 1 & & & & & & & &
+\\
+2 & 0 & 1 & 1 & & & & & & &
+\\
+3 & 0 & 1 & 3 & 1 & & & & & &
+\\
+4 & 0 & 1 & 7 & 6 & 1 & & & & &
+\\
+5 & 0 & 1 & 15 & 25 & 10 & 1 & & & &
+\\
+6 & 0 & 1 & 31 & 90 & 65 & 15 & 1 & & &
+\\
+7 & 0 & 1 & 63 & 301 & 350 & 140 & 21 & 1 & &
+\\
+8 & 0 & 1 & 127 & 966 & 1701 & 1050 & 266 & 28 & 1 &
+\\
+9 & 0 & 1 & 255 & 3025 & 7770 & 6951 & 2646 & 462 & 36 & 1
+\\
+
+\end{longtable}
+\item Числа стирлинга 1-го рода
+\begin{equation}
+  \begin{split}
+    &S_1(n, k) = 
+    \left\{
+    \begin{array}{cc}
+    S_1(n-1, k-1) + (n - 1) \cdot S_1(n-1, k), & 0 < k \le n\\
+    0, & n = 0\\
+    1, & k = n
+    \end{array}
+    \right.\\
+    &S_1(n + 1, m + 1) = \sum\limits_{k = 1}^n S_1(n, k) \cdot \binom{k}{m} = n! \cdot \sum\limits_{k=0}^n\frac{S_1(k, m)}{k!}\\
+    &S_1(n, m) = \sum\limits_{k=1}^n S_1(n + 1, k + 1) \cdot \binom{k}{m} \cdot (-1)^{m - k}\\
+    &S_1(n + m + 1, m) = \sum\limits_{k=0}^m (n + k) \cdot S_1(n + k, k)
+  \end{split}
+\end{equation}
+\begin{longtable}[c]{llllllll}
+
+n\textbackslash{}k & 0 & 1 & 2 & 3 & 4 & 5 & 6
+\\
+
+0 & 1 & & & & & &
+\\
+1 & 0 & 1 & & & & &
+\\
+2 & 0 & 1 & 1 & & & &
+\\
+3 & 0 & 2 & 3 & 1 & & &
+\\
+4 & 0 & 6 & 11 & 6 & 1 & &
+\\
+5 & 0 & 24 & 50 & 35 & 10 & 1 &
+\\
+6 & 0 & 120 & 274 & 225 & 85 & 15 & 1
+\\
+
+\end{longtable}
+\item Числа Белла (кол-во различных способов разбиения множества): 0:1, 1:1, 2:2, 3:5, 4:15, 5:52, 6:203, 7:877, 8:4140, 9:21147, 10:115975\\
+\begin{equation}
+  \begin{split}
+    &B_{n + 1} = \sum\limits_{k = 0}^n\binom{n}{k} \cdot B_k\\
+    &B_{n + p} \equiv B_n + B_{n + 1}\pmod{p}, \text{ p - простое}\\
+    &B_{n + p^m} \equiv m \cdot B_n + B_{n + 1}\pmod{p}, \text{ p - простое}
+  \end{split}
+\end{equation}
+
+\item Числа Каталана: : 0:1, 1:1, 2:2, 3:5, 4:14, 5:42, 6:132, 7:429, 8:1430, 9:4862, 10:16796, 11:58786, 12:208012, 13:742900,
+14:2674440, 15:9694845
+\begin{equation}
+  \begin{split}
+    &С_{n} = \sum\limits_{i = 0}^{n - 1}C_i \cdot C_{n - 1 - i}\\
+  \end{split}
+\end{equation}
+
+\end{itemize}
 \end{document}
