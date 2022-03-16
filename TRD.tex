@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage[left=1cm,right=1cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{blindtext}
+\usepackage{multicol}
+\usepackage{color}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage{fancybox,fancyhdr}
+\usepackage{LastPage}
+
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{
+  language=C++,
+	numbers=none,
+	basicstyle=\ttfamily\footnotesize,
+	keywordstyle=\color{blue}\ttfamily,
+	stringstyle=\color{blue}\ttfamily,
+	commentstyle=\color{red}\ttfamily,
+	morecomment=[l][\color{blue}]{\#}, 
+	tabsize=1,
+}
+
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  language=C++,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{dkgreen},
+  commentstyle=\color{red},
+  identifierstyle=\color{blue},
+  stringstyle=\color{mauve},
+}
+
+\lstset{escapechar=@,style=customc}
+
+\fancyhead[L]{Nizhny Novgorod State University: Respect, Power and ... Banana (Burdukov, Kulandin, Sukharev)}
+\fancyhead[R]{page \thepage}
+\fancyhead[C]{}
+\fancyfoot[C]{}
+\pagestyle{fancy}
+
+\setlength{\columnseprule}{0.5pt}
+\def\columnseprulecolor{\color{black}}
+
+\renewcommand\contentsname{Содержание}
+\renewcommand{\headrulewidth}{2pt}
+
+\begin{document}
+
+\begin{multicols}{2}
+
+\tableofcontents
+
+\section{Setup}
+\subsection{Instructions}
+Нужно выбрать среду разработки.
+\\ g++ -Wall -Wextra -Weffc++ -O3 -DHOME=1 -o a main.cpp
+\subsection{Template}
+\lstinputlisting[style=customc]{template.cpp}
+\subsection{Make folders}
+\lstinputlisting[language=bash]{run.sh}
+\section{Algorithms}
+\subsection{Pragmas}
+\lstinputlisting[style=customc]{Algorithms/pragmas.cpp}
+\subsection{Sieve}
+\lstinputlisting[style=customc]{Algorithms/strong_sieve.cpp}
+\subsection{2D geometry + Сonvex hull}
+\lstinputlisting[style=customc]{Algorithms/geoma.cpp}
+\subsection{GCDEX}
+\lstinputlisting[style=customc]{Algorithms/gcdex.cpp}
+\subsection{Strong comp \& bridges \& cutpoints}
+\lstinputlisting[style=customc]{Algorithms/Graphs/strong_components _and_bridges.cpp}
+\subsection{Max flow Dinic}
+\lstinputlisting[style=customc]{Algorithms/Graphs/Flows/Dinic.cpp}
+\subsection{Min Cost Max Flow}
+\lstinputlisting[style=customc]{Algorithms/Graphs/Flows/MCMF.cpp}
+\subsection{HLD}
+\lstinputlisting[style=customc]{Algorithms/Graphs/HLD.cpp}
+\subsection{LCA}
+\lstinputlisting[style=customc]{Algorithms/Graphs/LCA.cpp}
+\subsection{Sparse table}
+\lstinputlisting[style=customc]{Algorithms/sparse_table.cpp}
+\subsection{Fenwick}
+\lstinputlisting[style=customc]{Algorithms/fenwick.cpp}
+\subsection{Сartesian tree}
+\lstinputlisting[style=customc]{Algorithms/Cartesian_tree/version2.cpp}
+\subsection{BigInt}
+\lstinputlisting[style=customc]{Algorithms/BigInt.cpp}
+\subsection{Prefix function}
+\lstinputlisting[style=customc]{Algorithms/Strings/kmp.cpp}
+\subsection{Z function}
+\lstinputlisting[style=customc]{Algorithms/Strings/z.cpp}
+\subsection{Manacher}
+\lstinputlisting[style=customc]{Algorithms/Strings/manacher.cpp}
+\subsection{Aho-Corasick}
+\lstinputlisting[style=customc]{Algorithms/Strings/aho_corasick.cpp}
+\subsection{Персистентное ДО}
+\lstinputlisting[style=customc]{Algorithms/Persistent ST/1.cpp}
+\subsection{FFT}
+\lstinputlisting[style=customc]{Algorithms/FFT.cpp}
+\subsection{Simplex method}
+\lstinputlisting[style=customc]{Algorithms/simplex.cpp}
+\subsection{2-SAT}
+\lstinputlisting[style=customc]{Algorithms/2sat.cpp}
+\end{multicols}
+\newpage
+\section{Формулы}
+
+\end{document}

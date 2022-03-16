@@ -39,21 +39,22 @@ tree update(const tree &t, int l, int r, int pos, int val){
     tree q = t->left, w = t->right;
     int m = (l + r) >> 1;
     if (pos <= m){
-
+        if (!q) q = new node();
         q = update(q, l, m, pos, val);
     }
     else {
+        if (!w) w = new node();
         w = update(w, m + 1, r, pos, val);
     }
-    return new node(q, w, min(q->mi, w->mi));
+    return new node(q, w, (q ? q->mi : 0) + (w ? w->mi : 0));
 }
 
 int get(tree t, int tl, int tr, int l, int r){
-    if (l > r) return mod;
+    if (l > r) return 0;
     if ((!t) || (l == tl && r == tr)){
-        return t ? t->mi : mod;
+        return t ? t->mi : 0;
     }
     int m = (tl + tr) >> 1;
-    int ans =  min(get(t->left, tl, m, l, min(r, m)), get(t->right, m + 1, tr, max(l, m + 1), r));
+    int ans =  get(t->left, tl, m, l, min(r, m)) + get(t->right, m + 1, tr, max(l, m + 1), r);
     return ans;
 }

@@ -6,28 +6,6 @@ struct Fenwick{
     f.resize(N, 0);
   }
 
-  void add(int x, int y){
-    x++;
-    while(x < N){
-      f[x] += y;
-      x += x & -x;
-    }
-  }
-
-  int sum(int x){
-    x++;
-    int ans = 0;
-    while(x){
-      ans += f[x];
-      x -= x & -x;
-    }
-    return ans;
-  }
-
-  int sum(int l, int r){
-    return sum(r) - sum(l - 1);
-  }
-
   // calculating the k-th unit on a segment
   // initially calc_pos(step, N, k)
   // where step = max {i: 2^i <= N}

@@ -90,7 +90,8 @@ struct HLD {
 		}
 	}
 
-	template <class B> void process(int u, int v, B op) {
+	template <class B>
+	void process(int u, int v, B op) {
 		for (; rt[u] != rt[v]; v = par[rt[v]]) {
 			if (depth[rt[u]] > depth[rt[v]]) swap(u, v);
 			op(pos[rt[v]], pos[v] + 1);
@@ -106,12 +107,13 @@ struct HLD {
 	int queryPath(int u, int v) {
 		int res = inf;
 		process(u, v, [&](int l, int r) {
-				res = min(res, tree->query(l, r));
+      res = min(res, tree->query(l, r));
 		});
 		return res;
 	}
-
-	int querySubtree(int v) { // modifySubtree is similar
+  
+	// modifySubtree is similar
+	int querySubtree(int v) { 
 		return tree->query(pos[v], pos[v] + siz[v]);
 	}
 };

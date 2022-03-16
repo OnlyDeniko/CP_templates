@@ -5,20 +5,21 @@ struct Sieve{
   vector<int> phi;  // Euler function
   vector<int> a1;   // step for p1
   vector<int> p1a1; // contains p1^a1
-  vector<int> si0;  // number of divisors of i-th number
-  vector<int> si1;  // sum of all divisors of i-th number
+  vector<int> si0;  // number of divisors
+  vector<int> si1;  // sum of all divisors
 
   Sieve(int _n) : n(_n){
     md.resize(n + 1);
     iota(md.begin(), md.end(), 0);
 	  md[1] = 0;  
-
-    for(int i = 2;i < n + 1;++i){
+    for(int i = 2;i <= n;++i){
       if (md[i] == i) primes.push_back(i);
-      for(int j = 0;j < primes.size() && primes[j] <= md[i] && 1ll * i * primes[j] <= n;j++) md[i * primes[j]] = primes[j];
+      for(int j = 0;j < primes.size() &&
+          primes[j] <= md[i] &&
+          1ll * i * primes[j] <= n;j++)
+            md[i * primes[j]] = primes[j];
     }
 
-    
     mu.resize(n + 1, 0);
     mu[1] = 1;
     phi.resize(n + 1, 0);
@@ -34,7 +35,6 @@ struct Sieve{
 
     for(int i = 2;i < n + 1;++i){
       int j = i / md[i];
-      
       if (md[i] == md[j]) {
         mu[i] = 0;
         phi[i] = md[i] * phi[j];

@@ -36,10 +36,12 @@ void update(node * root){
     root->min = min({root->data, get_min(root->left), get_min(root->right)});
 }
 
-int & kth(node* root, int k){//нумерация с 1!
+//numeration from 1!
+int & kth(node* root, int k){
     if (k <= get_size(root->left)) return kth(root->left, k);
     if (k == get_size(root->left) + 1) return root->data;
-    return kth(root->right, k - get_size(root->left) - 1);
+    return kth(root->right,
+            k - get_size(root->left) - 1);
 }
 
 pair<node*, node*> split_kth(node* root, int k){
@@ -83,8 +85,6 @@ void print(node* root){
 
 node* insert(node * root, int place, int val){
     auto sp = split_kth(root, place);
-//    cout << "! "; print(sp.first); cout << '\n';
-//    cout << "!! "; print(sp.second); cout << '\n';
     node * lol = new node(val);
     root = merge(merge(sp.first, lol), sp.second);
     update(root);
@@ -103,40 +103,10 @@ int get_min_on_segment(node * root, int l, int r){
     int ans;
     auto qwe2 = split_kth(qwe1.first, l - 1);
     ans = get_min(qwe2.second);
-    root = merge(merge(qwe2.first, qwe2.second), qwe1.second);
+    root = merge(merge(qwe2.first, qwe2.second),
+                qwe1.second);
     return ans;
 }
 
-signed main(){
-    ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
-    node* root = nullptr;
-//    root = insert(root, 0, 1);
-//    root = insert(root, 0, 2);
-//    root = insert(root, 1, 3);
-//    root = insert(root, 2, 4);
-//    root = insert(root, 2, 5);
-//    print(root);
-//    return 0;
-    int q;
-    cin >> q;
-//    cout << q << '\n';
-//    return 0;
-    while(q--){
-        char x;
-        cin >> x;
-        if (x == '+'){
-            int pos, val;
-            cin >> pos >> val;
-            root = insert(root, pos, val);
-        }
-        else {
-            int l, r;
-            cin >> l >> r;
-            assert(l != 0);
-            cout << get_min_on_segment(root, l, r) << '\n';
-        }
-//        print(root);
-//        cout << '\n';
-    }
-    return 0;
-}
+node* root = nullptr;
+// insert, erase, get_min_on_segment, print
