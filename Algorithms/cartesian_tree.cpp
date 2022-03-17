@@ -1,21 +1,20 @@
-
 struct node{
-    mt19937 gen(chrono::high_resolution_clock::now().time_since_epoch().count());
-    int data, y, size, min;
-    node* left;
-    node* right;
-    node(int val){
-      data = val;
-      y = gen();
-      y = abs(y);
-      size = 1;
-      min = data;
-      left = right = nullptr;
-    }
-    ~node(){
-      if (left) delete left;
-      if (right) delete right;
-    }
+  mt19937 gen(chrono::high_resolution_clock::now().time_since_epoch().count());
+  int data, y, size, min;
+  node* left;
+  node* right;
+  node(int val){
+    data = val;
+    y = gen();
+    y = abs(y);
+    size = 1;
+    min = data;
+    left = right = nullptr;
+  }
+  ~node(){
+    if (left) delete left;
+    if (right) delete right;
+  }
 };
 
 int get_size(node* root){
