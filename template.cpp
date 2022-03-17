@@ -20,7 +20,7 @@ typedef vector<pii> vpi;
 typedef vector<vi> vvi;
 mt19937 gen(chrono::high_resolution_clock::now().time_since_epoch().count());
 
-void solve(){}
+void solve(){} 
 
 signed main() {
   ios_base::sync_with_stdio(false);

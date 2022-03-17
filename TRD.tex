@@ -1,52 +1,38 @@
-\documentclass{article}
-\usepackage[left=1cm,right=1cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\documentclass[10pt]{article}
 \usepackage{blindtext}
 \usepackage{multicol}
 \usepackage{color}
 \usepackage[utf8]{inputenc}
 \usepackage[T2A]{fontenc}
 \usepackage{fancybox,fancyhdr}
-\usepackage{LastPage}
+\usepackage{lastpage}
 \usepackage{amsmath}
 \usepackage[warn]{mathtext}
 \usepackage{listings}
 \usepackage{color}
 \usepackage{longtable}
 
-\definecolor{dkgreen}{rgb}{0,0.6,0}
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
+\usepackage{geometry}
+\geometry{
+	a4paper,
+	top=74pt,
+	bottom=40pt,
+	left=40pt,
+	right=40pt,
+}
 
 \lstset{
-  language=C++,
-	numbers=none,
-	basicstyle=\ttfamily\small,
-	keywordstyle=\color{blue}\ttfamily,
-	stringstyle=\color{blue}\ttfamily,
-	commentstyle=\color{red}\ttfamily,
-	morecomment=[l][\color{blue}]{\#}, 
-	tabsize=1,
-}
-
-\lstdefinestyle{customc}{
-  belowcaptionskip=1\baselineskip,
+	language=C++,
+	tabsize=2,
+	basicstyle=\footnotesize\ttfamily,
   breaklines=true,
-  language=C++,
-  showstringspaces=false,
-  basicstyle=\small\ttfamily,
-  keywordstyle=\bfseries\color{dkgreen},
-  commentstyle=\color{red},
-  identifierstyle=\color{blue},
-  stringstyle=\color{mauve},
+  keepspaces=false,
+  showspaces=false,
+  showstringspaces=false, 
 }
-
-\lstset{escapechar=@,style=customc}
-
+\fancyhf{}
 \fancyhead[L]{Nizhny Novgorod State University: Respect, Power and ... Banana (Burdukov, Kulandin, Sukharev)}
-\fancyhead[R]{page \thepage}
-\fancyhead[C]{}
-\fancyfoot[C]{}
-\pagestyle{fancy}
+\fancyhead[R]{Page~\thepage~of~\pageref{LastPage}}
 
 \setlength{\columnseprule}{0.5pt}
 \def\columnseprulecolor{\color{black}}
@@ -55,6 +41,7 @@
 \renewcommand{\headrulewidth}{2pt}
 
 \begin{document}
+\pagestyle{fancy}
 
 \begin{multicols}{2}
 
@@ -65,56 +52,59 @@
 Выбрали CLion. Нужен гайд по установке окружения.
 \\ g++ -Wall -Wextra -Weffc++ -O3 -DHOME=1 -o a main.cpp
 \subsection{Template}
-\lstinputlisting[style=customc]{template.cpp}
+\lstinputlisting{template.cpp}
 \subsection{Make folders}
 \lstinputlisting[language=bash]{run.sh}
 \subsection{Фишечки}
 \lstinputlisting[language=bash]{Algorithms/fishki.cpp}
+\newpage
 \section{Algorithms}
 \subsection{Pragmas}
-\lstinputlisting[style=customc]{Algorithms/pragmas.cpp}
+\lstinputlisting{Algorithms/pragmas.cpp}
 \subsection{PBDS}
-\lstinputlisting[style=customc]{Algorithms/PBDS.cpp}
+\lstinputlisting{Algorithms/PBDS.cpp}
 \subsection{Sieve}
-\lstinputlisting[style=customc]{Algorithms/strong_sieve.cpp}
+\lstinputlisting{Algorithms/strong_sieve.cpp}
 \subsection{2D geometry + Сonvex hull}
-\lstinputlisting[style=customc]{Algorithms/geoma.cpp}
-\subsection{GCDEX}
-\lstinputlisting[style=customc]{Algorithms/gcdex.cpp}
-\subsection{Strong comp \& bridges \& cutpoints}
-\lstinputlisting[style=customc]{Algorithms/Graphs/strong_components _and_bridges.cpp}
+\lstinputlisting{Algorithms/geoma.cpp}
+\subsection{GCDEX + Диофантово уравнение}
+\lstinputlisting{Algorithms/gcdex.cpp}
+\subsection{Strong comp + bridges + cutpoints}
+\lstinputlisting{Algorithms/Graphs/strong_components _and_bridges.cpp}
 \subsection{Max flow Dinic}
-\lstinputlisting[style=customc]{Algorithms/Graphs/Flows/Dinic.cpp}
+\lstinputlisting{Algorithms/Graphs/Flows/Dinic.cpp}
 \subsection{Min Cost Max Flow}
-\lstinputlisting[style=customc]{Algorithms/Graphs/Flows/MCMF.cpp}
+\lstinputlisting{Algorithms/Graphs/Flows/MCMF.cpp}
 \subsection{HLD}
-\lstinputlisting[style=customc]{Algorithms/Graphs/HLD.cpp}
+\lstinputlisting{Algorithms/Graphs/HLD.cpp}
 \subsection{LCA}
-\lstinputlisting[style=customc]{Algorithms/Graphs/LCA.cpp}
+\lstinputlisting{Algorithms/Graphs/LCA.cpp}
 \subsection{Sparse table}
-\lstinputlisting[style=customc]{Algorithms/sparse_table.cpp}
+\lstinputlisting{Algorithms/sparse_table.cpp}
 \subsection{Fenwick}
-\lstinputlisting[style=customc]{Algorithms/fenwick.cpp}
+\lstinputlisting{Algorithms/fenwick.cpp}
 \subsection{Сartesian tree}
-\lstinputlisting[style=customc]{Algorithms/Cartesian_tree/version2.cpp}
+\lstinputlisting{Algorithms/cartesian_tree.cpp}
 \subsection{BigInt}
-\lstinputlisting[style=customc]{Algorithms/BigInt.cpp}
+\lstinputlisting{Algorithms/BigInt.cpp}
 \subsection{Prefix function}
-\lstinputlisting[style=customc]{Algorithms/Strings/kmp.cpp}
+\lstinputlisting{Algorithms/Strings/kmp.cpp}
 \subsection{Z function}
-\lstinputlisting[style=customc]{Algorithms/Strings/z.cpp}
+\lstinputlisting{Algorithms/Strings/z.cpp}
 \subsection{Manacher}
-\lstinputlisting[style=customc]{Algorithms/Strings/manacher.cpp}
+\lstinputlisting{Algorithms/Strings/manacher.cpp}
 \subsection{Aho-Corasick}
-\lstinputlisting[style=customc]{Algorithms/Strings/aho_corasick.cpp}
+\lstinputlisting{Algorithms/Strings/aho_corasick.cpp}
+\subsection{Suffix array + LCP}
+\lstinputlisting{Algorithms/Strings/suf_mas.cpp}
 \subsection{Персистентное ДО}
-\lstinputlisting[style=customc]{Algorithms/Persistent ST/1.cpp}
+\lstinputlisting{Algorithms/Persistent ST/1.cpp}
 \subsection{FFT}
-\lstinputlisting[style=customc]{Algorithms/FFT.cpp}
+\lstinputlisting{Algorithms/FFT.cpp}
 \subsection{Simplex method}
-\lstinputlisting[style=customc]{Algorithms/simplex.cpp}
+\lstinputlisting{Algorithms/simplex.cpp}
 \subsection{2-SAT}
-\lstinputlisting[style=customc]{Algorithms/2sat.cpp}
+\lstinputlisting{Algorithms/2sat.cpp}
 \end{multicols}
 \newpage
 \section{Формулы}

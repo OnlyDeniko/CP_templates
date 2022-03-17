@@ -6,7 +6,7 @@ class Simplex {
 	vector<int> B, N;
 
 	void pivot(int r, int s) {
-		double inv = 1 / D[r][s];
+		double inv = 1. / D[r][s];
 		for (int i = 0; i < m + 2; i++)
 			if (i != r)
 				for (int j = 0; j < n + 2; j++)
