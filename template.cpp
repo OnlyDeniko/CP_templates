@@ -18,7 +18,6 @@ typedef pair<int, int> pii;
 typedef vector<int> vi;
 typedef vector<pii> vpi;
 typedef vector<vi> vvi;
-mt19937 gen(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 void solve(){} 
 
