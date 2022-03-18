@@ -49,15 +49,29 @@
 
 \section{Setup}
 \subsection{Instructions}
-Выбрали CLion. Нужен гайд по установке окружения.
-\\ g++ -Wall -Wextra -Weffc++ -O3 -DHOME=1 -o a main.cpp
+\begin{enumerate}
+  \item Открыть VSCode
+  \item Настроить сборку, отладку, запуск
+  \begin{itemize}
+    \item Debug: g++ -std=c++17 -Wall 
+    -Wextra -Wno-unused-result -pg 
+    -DLOCAL -O0 -fsanitize=address 
+    -fsanitize=undefined 
+    -fstack-protector-strong -fstack-check 
+    -fno-sanitize-recover=all -o main.exe main.cpp
+    \item Release: g++ -Wall -Wextra 
+    -Wno-unused-result -O2 -DHOME=1 -o main.exe main.cpp
+  \end{itemize}  
+  \item touch template.cpp makefolders.sh
+  \item Набрать шаблон и makefolders
+  \item ./makefolders
+\end{enumerate}
 \subsection{Template}
 \lstinputlisting{template.cpp}
 \subsection{Make folders}
 \lstinputlisting[language=bash]{run.sh}
 \subsection{Фишечки}
 \lstinputlisting[language=bash]{Algorithms/fishki.cpp}
-\newpage
 \section{Algorithms}
 \subsection{Pragmas}
 \lstinputlisting{Algorithms/pragmas.cpp}

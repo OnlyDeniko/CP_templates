@@ -1,7 +1,3 @@
-using vi = vector<int>;
-using pii = pair<int, int>;
-using vpi = vector<pii>;
-using vvi = vector<vi>;
 using si = set<int>;
 
 void dfs_strong_components(int x, vvi & g, vi &used, vi & order, int comp){
