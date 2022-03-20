@@ -55,6 +55,13 @@ struct vec{
   bool operator<(const vec & a) const {
     return a.x == x ? y < a.y : x < a.x;
   }
+
+  void rotate(ldd a){
+    ldd was_x = x;
+    ldd was_y = y;
+    x = cos(a) * was_x - sin(a) * was_y;
+    y = sin(a) * was_x + cos(a) * was_y;
+  }
 };
 
 ldd vectmul(vec _1, vec _2){
@@ -198,7 +205,7 @@ bool ccw (vec a, vec b, vec c) {
 }
 
 vector<vec> convex_hull (vector<vec> a) {
-	if (a.size() == 1)  return;
+	if (a.size() == 1) return a;
 	sort (a.begin(), a.end());
 	vec p1 = a[0], p2 = a.back();
 	vector<vec> up, down;
