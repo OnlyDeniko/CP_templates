@@ -1,5 +1,8 @@
 \documentclass[10pt]{article}
 \usepackage{blindtext}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{wrapfig}
 \usepackage{multicol}
 \usepackage{color}
 \usepackage[utf8]{inputenc}
@@ -31,7 +34,7 @@
   showstringspaces=false, 
 }
 \fancyhf{}
-\fancyhead[L]{Nizhny Novgorod State University: Respect, Power and ... Banana (Burdukov, Kulandin, Sukharev)}
+\fancyhead[L]{Nizhny Novgorod State University: Presskachat (Burdukov, Kulandin, Sukharev)}
 \fancyhead[R]{Page~\thepage~of~\pageref{LastPage}}
 
 \setlength{\columnseprule}{0.5pt}
@@ -70,6 +73,8 @@
 \lstinputlisting{template.cpp}
 \subsection{Make folders}
 \lstinputlisting[language=bash]{run.sh}
+\subsection{Stress}
+\lstinputlisting[language=bash]{stress.sh}
 \subsection{Фишечки}
 \lstinputlisting[language=bash]{Algorithms/fishki.cpp}
 \section{Algorithms}
@@ -283,4 +288,14 @@ $\left|X\right| \le \left|f(X) \right|$, где $X$ -- множество вер
 Делаем граф из прошлого пункта + добавляем ребра $a->b$, такие, что
 в исходном графе есть путь от а к b. Количество путей = N - макс пар соч в двудольном графе
 \end{itemize}
+\newpage
+\begin{figure}[h]
+
+  \centering
+  
+  \includegraphics[width=0.8\linewidth]{hex.png}
+  
+  \label{fig:mpr}
+  
+  \end{figure}
 \end{document}
