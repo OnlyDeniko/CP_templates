@@ -4,7 +4,8 @@ struct LCA{
   vector<int> true_dist, fake_dist, parent;
   vector<vi> bp;
 
-  LCA(vector<vpi> & g, int start = 0): n(g.size()), start(start){
+  LCA(vector<vpi> & g, int start = 0): 
+  n(g.size()), start(start){
     true_dist.assign(n, INT_MAX);
     fake_dist.assign(n, INT_MAX);
     parent.assign(n, -1);
@@ -29,7 +30,8 @@ struct LCA{
         }
       }
     }
-    for(int i = 0;i < n;i++) bp[i][0] = parent[i];
+    for(int i = 0;i < n;i++) 
+      bp[i][0] = parent[i];
     for(int j = 1;j < LOG;j++){
       for(int i = 0;i < n;i++){
         bp[i][j] = bp[bp[i][j - 1]][j - 1];
