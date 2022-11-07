@@ -1,9 +1,4 @@
-read name
-mkdir $name
-cd $name
-for var
+for i in A B C D E F G H I J K L M
 do
-	mkdir $var
-	cp ../template.cpp $var/${var}sol.cpp
-	touch $var/in.txt
+	cp template.cpp main${var}.cpp
 done
