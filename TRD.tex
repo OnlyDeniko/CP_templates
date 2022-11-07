@@ -287,6 +287,17 @@ $\left|X\right| \le \left|f(X) \right|$, где $X$ -- множество вер
 \item \textbf{Покрытие общими путями}.
 Делаем граф из прошлого пункта + добавляем ребра $a->b$, такие, что
 в исходном графе есть путь от а к b. Количество путей = N - макс пар соч в двудольном графе
+\item \textbf{Матрица поворота вокруг любой заданной оси}.\\
+Пусть ось вращения задана единичным вектором $\mathbf{v} = (x,y,z)$, а угол поворота $\theta$.
+\begin{equation*}
+  M(\mathbf{v}, \theta) = \left(
+  \begin{array}{cccc}
+  \cos{\theta} + (1 - \cos{\theta})x^2 & (1 - \cos{\theta})xy - (\sin{\theta})z & (1 - \cos{\theta})xz + (\sin{\theta})y\\
+  (1 - \cos{\theta})yx + (\sin{\theta})z & \cos{\theta} + (1 - \cos{\theta})y^2 & (1 - \cos{\theta})yz - (\sin{\theta})x\\
+  (1 - \cos{\theta})zx - (\sin{\theta})y & (1 - \cos{\theta})zy + (\sin{\theta})x & \cos{\theta} + (1 - \cos{\theta})z^2
+  \end{array}
+  \right)
+\end{equation*}
 \end{itemize}
 \newpage
 \begin{figure}[h]
