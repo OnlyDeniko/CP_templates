@@ -1,6 +1,3 @@
-#define makeunique(x)
-  sort(all(x)), (x).resize(unique(all(x)) - (x).begin())
-
 void debug_out(){ cout << endl;}
  
 template<typename head, typename... tail>
@@ -39,4 +36,5 @@ bool uax(T &a, T b) {
   return a < b ? (a = b, true) : false; 
 }
 
-mt19937 gen(chrono::high_resolution_clock::now().time_since_epoch().count());
+random_device rd;
+mt19937 gen(rd());
