@@ -18,11 +18,15 @@ struct LCA{
     vector<int> que = {start};
     for(int i = 0;i < que.size();i++){
       int cur = que[i];
-      for(auto& [to, len] : g[cur]) if (true_dist[to] > true_dist[cur] + len){
-        true_dist[to] = true_dist[cur] + len;
-        fake_dist[to] = fake_dist[cur] + 1;
-        parent[to] = cur;
-        que.push_back(to);
+      for(auto& iter : g[cur]) {
+        to = iter.first;
+        len = iter.second;
+        if (true_dist[to] > true_dist[cur]+len){
+          true_dist[to] = true_dist[cur] + len;
+          fake_dist[to] = fake_dist[cur] + 1;
+          parent[to] = cur;
+          que.push_back(to);
+        }
       }
     }
     for(int i = 0;i < n;i++) bp[i][0] = parent[i];
