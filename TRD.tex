@@ -34,7 +34,7 @@
   showstringspaces=false, 
 }
 \fancyhf{}
-\fancyhead[L]{Nizhny Novgorod State University: Presskachat (Burdukov, Kulandin, Sukharev)}
+\fancyhead[L]{Nizhny Novgorod State University: Alexey Sergeevich (Burdukov, Kulandin, Sukharev)}
 \fancyhead[R]{Page~\thepage~of~\pageref{LastPage}}
 
 \setlength{\columnseprule}{0.5pt}
@@ -71,12 +71,14 @@
 \end{enumerate}
 \subsection{Template}
 \lstinputlisting{template.cpp}
-\subsection{Make folders}
+\subsection{Make folders (Linux)}
 \lstinputlisting[language=bash]{run.sh}
+\subsection{Make folders (Windows)}
+\lstinputlisting{run.bat}
 \subsection{Stress}
 \lstinputlisting[language=bash]{stress.sh}
 \subsection{Фишечки}
-\lstinputlisting[language=bash]{Algorithms/fishki.cpp}
+\lstinputlisting{Algorithms/fishki.cpp}
 \section{Algorithms}
 \subsection{Pragmas}
 \lstinputlisting{Algorithms/pragmas.cpp}
@@ -263,6 +265,19 @@ n\textbackslash{}k & 0 & 1 & 2 & 3 & 4 & 5 & 6
   больше полустепени исхода, еще одна вершина, для которой полустепень исхода на единицу больше полустепени захода,
   а во всех остальных вершинах полустепени исхода и захода равны
 \end{itemize}
+\item \textbf{Нахождение Эйлерова цикла за $O(M)$}.
+
+procedure FindEulerPath (V)
+
+
+	1. перебрать все рёбра, выходящие из вершины V;
+		каждое такое ребро удаляем из графа, и
+		вызываем FindEulerPath из второго конца этого ребра;
+
+
+  2. добавляем вершину V в ответ.
+
+\textbf{Чтобы найти эйлеров путь (не цикл)}, поступим таким образом: если V1 и V2 - это две вершины нечётной степени, то просто добавим ребро (V1,V2), в полученном графе найдём эйлеров цикл (он, очевидно, будет существовать), а затем удалим из ответа "фиктивное" ребро (V1,V2).
 \item \textbf{Максимальный поток} = минимальный разрез. Вершины принадлежащие минимальному разрезу находятся запуском dfs из истока по ребрам, у которых поток != 0
 \item \textbf{Максимальное число реберно-непересекающихся путей} = макс поток (каждое ребро капасити = 1). Пути можно найти жадно из истока к стоку
 \item \textbf{Вершинно-непересекающиеся пути} находятся макс потоком через расщепление вершины на две
