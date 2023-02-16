@@ -14,11 +14,15 @@ struct vec{
     return hypotl(x, y);
   }
   bool operator == (const vec & a){
-    return abs(x - a.x) < EPS && abs(y - a.y) < EPS;
+    return fabs(x - a.x) < EPS && fabs(y - a.y) < EPS;
   }
-
+  ldd polar(){
+    ldd ans = acos(x / len());
+    if (y < 0) ans = 2 * PI - ans;
+    return ans;
+  }
   bool operator < (const vec & a){
-    if (abs(x - a.x) < EPS){
+    if (fabs(x - a.x) < EPS){
       return y < a.y;
     }
     return x < a.x;
@@ -39,7 +43,7 @@ struct vec{
     return {x - a.x, y - a.y};
   }
 
-  vec operator*(int a) const {
+  vec operator*(ldd a) const {
     return {a * x, a * y};
   }
 
@@ -56,11 +60,8 @@ struct vec{
     return a.x == x ? y < a.y : x < a.x;
   }
 
-  void rotate(ldd a){
-    ldd was_x = x;
-    ldd was_y = y;
-    x = cos(a) * was_x - sin(a) * was_y;
-    y = sin(a) * was_x + cos(a) * was_y;
+  vec rotate(ldd a){
+    return vec(cos(a) * x - sin(a) * y, sin(a) * x + cos(a) * y);
   }
 };
 
@@ -77,11 +78,11 @@ ldd dist(vec v1, vec v2){
 }
 
 bool Parallel(vec v1, vec v2){
-  return abs(vectmul(v1, v2)) < EPS;
+  return fabs(vectmul(v1, v2)) < EPS;
 }
 
 int sign(ldd x){
-  if (abs(x) < EPS) return 0;
+  if (fabs(x) < EPS) return 0;
   if (x > 0) return 1;
   return -1;
 }
@@ -91,9 +92,20 @@ ldd AngleBetweenVec(vec p1, vec p2){
   return acosl(cosa);
 }
 
+
+array<ldd, 3> getNormalLine(vec x, vec dir) {
+  return {dir.y, -dir.x, vectmul(dir, x)};
+}
+
 bool OnSegment(vec p, vec p1, vec p2){
   return vectmul(p - p1, p2 - p1) == 0 &&
           scalmul(p1 - p, p2 - p) <= 0;
+}
+
+bool OnRay(vec p, vec p1, vec p2){
+  auto line = getNormalLine(p1, p2 - p1);
+  return fabs(scalmul(vec(line[0], line[1]), p) + line[2]) < EPS &&
+          scalmul(p2 - p1, p - p1) >= 0;
 }
 
 bool SegmentsIntersect(vec p1, vec p2,
@@ -127,43 +139,24 @@ vec findSegmentsIntersection(vec p1, vec p2,
 bool LinesIntersect(vec p1, vec p2, vec p3, vec p4){
   vec napr1 = p2 - p1;
   vec napr2 = p4 - p3;
-  ldd a1 = napr1.y;
-  ldd b1 = -napr1.x;
-  ldd c1 = vectmul(napr1, p1);
-  ldd a2 = napr2.y;
-  ldd b2 = -napr2.x;
-  ldd c2 = vectmul(napr2, p3);
+  auto line1 = getNormalLine(p1, napr1);
+  auto line2 = getNormalLine(p3, napr2);
   return
-    !(abs(vectmul(vec(a1, a2), vec(b1, b2))) < EPS);
+    !(abs(vectmul(vec(line1[0], line2[0]), vec(line1[1], line2[1]))) < EPS);
 }
 
 bool EqualLines(vec p1, vec p2, vec p3, vec p4){
   vec napr1 = p2 - p1;
   vec napr2 = p4 - p3;
-  ldd a1 = napr1.y;
-  ldd b1 = -napr1.x;
-  ldd c1 = vectmul(napr1, p1);
-  ldd a2 = napr2.y;
-  ldd b2 = -napr2.x;
-  ldd c2 = vectmul(napr2, p3);
+  auto line1 = getNormalLine(p1, napr1);
+  auto line2 = getNormalLine(p3, napr2);
   return 
-    abs(vectmul(vec(a1, a2), vec(b1, b2))) < EPS &&
-    abs(vectmul(vec(a1, a2), vec(c1, c2))) < EPS &&
-    abs(vectmul(vec(b1, b2), vec(c1, c2))) < EPS;
+    abs(vectmul(vec(line1[0], line2[0]), vec(line1[1], line2[1]))) < EPS &&
+    abs(vectmul(vec(line1[0], line2[0]), vec(line1[2], line2[2]))) < EPS &&
+    abs(vectmul(vec(line1[1], line2[1]), vec(line1[2], line2[2]))) < EPS;
 }
 
-vec findLinesIntersection(vec p1, vec p2,
-                          vec p3, vec p4){
-  vec napr1 = p2 - p1;
-  vec napr2 = p4 - p3;
-  napr1 = norm(napr1);
-  napr2 = norm(napr2);
-  ldd a1 = napr1.y;
-  ldd b1 = -napr1.x;
-  ldd c1 = vectmul(napr1, p1);
-  ldd a2 = napr2.y;
-  ldd b2 = -napr2.x;
-  ldd c2 = vectmul(napr2, p3);
+vec findNormalLinesIntersection(ldd a1, ldd b1, ldd c1, ldd a2, ldd b2, ldd c2){
   return 
     {vectmul(vec(b1, b2), vec(c1, c2)) /
       vectmul(vec(a1, a2), vec(b1, b2)),
@@ -171,14 +164,24 @@ vec findLinesIntersection(vec p1, vec p2,
       vectmul(vec(a1, a2), vec(b1, b2))};
 }
 
-ldd calc(vec p1, vec p2, vec p3){
-  return fabs((p2.x - p1.x) * (p3.y - p1.y) -
-          (p3.x - p1.x) * (p2.y - p1.y));
+vec findLinesIntersection(vec p1, vec p2,
+                          vec p3, vec p4){
+  vec napr1 = p2 - p1;
+  vec napr2 = p4 - p3;
+  napr1 = napr1.norm();
+  napr2 = napr2.norm();
+  auto line1 = getNormalLine(p1, napr1);
+  auto line2 = getNormalLine(p3, napr2);
+  return findNormalLinesIntersection(line1[0], line1[1], line1[2], line2[0], line2[1], line2[2]);
+}
+
+ldd TriangleArea(vec p1, vec p2, vec p3){
+  return fabs(vectmul(p2 - p1, p3 - p1));
 }
 
 bool PointInTriangle(vec p, vec p1, vec p2, vec p3){
-  return calc(p1, p2, p3) >= calc(p, p2, p3) +
-          calc(p1, p, p3) + calc(p1, p2, p);
+  return TriangleArea(p1, p2, p3) >= TriangleArea(p, p2, p3) +
+          TriangleArea(p1, p, p3) + TriangleArea(p1, p2, p);
 }
 
 bool PointInConvexPolygon(vec p, vector<vec> & pol){
@@ -190,6 +193,21 @@ bool PointInConvexPolygon(vec p, vector<vec> & pol){
     else r = mid;
   }
   return PointInTriangle(p, pol[0], pol[1], pol[r]);
+}
+
+
+ldd MinDistToRay(vec x, vec y, vec z){
+  if (scalmul(z - y, x - y) >= 0){
+    return fabs(vectmul(z - y, x - y)) / (z - y).len();
+  }
+  return (x - y).len();
+}
+
+ldd MinDistToSegment(vec p, vec p1, vec p2){
+  if (sign(scalmul(p2 - p1, p - p1)) <= 0 || sign(scalmul(p1 - p2, p - p2)) <= 0){
+    return min(dist(p2, p), dist(p1, p));
+  }
+  return fabs(vectmul(p2 - p1, p - p1)) / (p2 - p1).len();
 }
 
 bool cw (vec a, vec b, vec c) {
