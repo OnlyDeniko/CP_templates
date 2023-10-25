@@ -3,12 +3,11 @@ struct AhoCorasick {
 	static const char C = 'a';
 
 	struct Node {
-		map<char, int> to;
+		map<char, int> to; // use array to speed up
 		int link;
 		bool leaf;
-
+    vi indices; // save indices of initial strings
 		int go[L];
-
 		Node() : to(), link(), leaf() {
 			fill(go, go + L, 0);
 		}
@@ -18,7 +17,7 @@ struct AhoCorasick {
 
 	AhoCorasick() : t(1) {}
 
-	void add(const string& s) {
+	void add(const string& s, int index) {
 		int v = 0;
 		for (char c : s) {
 			if (!t[v].to.count(c)) {
@@ -28,6 +27,7 @@ struct AhoCorasick {
 			v = t[v].to[c];
 		}
 		t[v].leaf = true;
+    t[v].indices.pb(index);
 	}
 
 	void build() {
@@ -43,6 +43,10 @@ struct AhoCorasick {
 					if (t[u].to.count(p.first))
 						u = t[u].to[p.first];
 					t[p.second].link = u;
+					// propagation
+          vi & cur = t[u].indices;
+          vi & nxt = t[p.second].indices;
+          nxt.insert(nxt.end(), all(cur));
 				}
 				t[v].go[p.first - C] = p.second;
 			}
