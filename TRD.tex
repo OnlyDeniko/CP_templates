@@ -96,12 +96,16 @@
 \lstinputlisting{Algorithms/Graphs/cutpoints.cpp}
 \subsection{Max flow Dinic $O(N^2M)$}
 \lstinputlisting{Algorithms/Graphs/Flows/Dinic.cpp}
-\subsection{Min Cost Max Flow $O(N^2M^2)$}
+\subsection{Min Cost Max Flow $O(NM^2)$}
 \lstinputlisting{Algorithms/Graphs/Flows/MCMF.cpp}
 \subsection{HLD $O(N\log{N})$}
 \lstinputlisting{Algorithms/Graphs/HLD.cpp}
 \subsection{LCA $O(N\log{N})$}
 \lstinputlisting{Algorithms/Graphs/LCA.cpp}
+\subsection{Венгерский алгоритм $O(N^2M)$}
+\lstinputlisting{Algorithms/Graphs/hungarian.cpp}
+\subsection{Online bridges $O(N\log{N} + Q\log{N})$}
+\lstinputlisting{Algorithms/Graphs/online_bridges.cpp}
 \subsection{Sparse table $O(N\log{N})$}
 \lstinputlisting{Algorithms/sparse_table.cpp}
 \subsection{Fenwick $O(N\log{N})$}
@@ -316,11 +320,18 @@ $\left|X\right| \le \left|f(X) \right|$, где $X$ -- множество вер
   \right)
 \end{equation*}
 \newpage
-\item \textbf{Дан кактус с длиной максимального простого пути равным 3 (треугольники). Надо уметь отвечать запросы вида "сколько путей между вершинами a b длиной k"}.
+\item \textbf{Дан кактус с длиной максимального простого пути равным 3 (треугольники). 
+Надо уметь отвечать запросы вида "сколько путей между вершинами a b длиной k"}.
 \begin{multicols}{2}
-
 \lstinputlisting[language=c++]{Algorithms/PTZ_summer_2022_H7.cpp}
-
+\end{multicols}
+\item \textbf{Дана выпуклая оболочка. Необходимо найти кол-во вершин, которые надо удалить,
+чтобы можно было разместить точку, которая не будет покрыта оставшейся оболочкой.\newline
+Решение: 
+1. Рассматриваем только области из последовательных точек.
+2. Бинарим ответ и находим выпуклую оболочку, образованную пересеченными полуплоскостями}.
+\begin{multicols}{2}
+\lstinputlisting[language=c++]{Algorithms/neerc10_J.cpp}
 \end{multicols}
 \end{itemize}
 \newpage
